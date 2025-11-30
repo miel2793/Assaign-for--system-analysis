@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lost & Found Report Form</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --neon: #ff2d8b;
+      --text: #0f172a;
+      --muted: #64748b;
+      --bg: #ffffff;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+    }
+    body { background: var(--bg); color: var(--text); }
+
+    .card-wrap { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+    .neon { color: var(--neon); }
+
+    .input-light, textarea, select {
+      background: white;
+      border: 1px solid #d4d4d8;
+      color: var(--text);
+      padding: .5rem .75rem;
+      border-radius: .5rem;
+    }
+    .input-light:focus, textarea:focus, select:focus {
+      outline: 2px solid rgba(255,45,139,0.4);
+    }
+
+    .label-muted { color: #475569; }
+    .required::after { content:"*"; color:var(--neon); margin-left:4px; }
+  </style>
+</head>
+
+<body class="min-h-screen px-4 py-8">
+
+  <div class="max-w-3xl mx-auto">
+
+    <!-- Header -->
+    <header class="text-center mb-6">
+      <h1 class="text-3xl font-semibold neon">Lost & Found Item Report Form</h1>
+      <p class="text-sm text-gray-500 mt-2">
+        Report a lost or found item on campus. Required fields are marked.
+      </p>
+    </header>
+
+    <!-- Form -->
+    <form id="lostFoundForm" class="space-y-6 card-wrap p-6" novalidate>
+      
+      <!-- Identification -->
+      <section>
+        <h2 class="text-lg font-medium text-gray-700">Identification & Access</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+
+          <label class="block">
+            <span class="text-sm label-muted">Full Name <span class="required"></span></span>
+            <input id="fullName" name="fullName" required type="text" class="mt-1 w-full input-light" placeholder="e.g., John Doe" />
+          </label>
+
+          <label class="block">
+            <span class="text-sm label-muted">Student ID <span class="required"></span></span>
+            <input id="studentId" name="studentId" required type="text" class="mt-1 w-full input-light" />
+          </label>
+
+          <label class="block">
+            <span class="text-sm label-muted">Phone Number <span class="required"></span></span>
+            <input id="phone" name="phone" required type="tel" pattern="[0-9]{10,15}" class="mt-1 w-full input-light" placeholder="017XXXXXXXX" />
+            <p class="text-xs text-gray-500 mt-1">Digits only (10–15 digits)</p>
+          </label>
+
+          <label class="block">
+            <span class="text-sm label-muted">Email</span>
+            <input id="email" name="email" type="email" class="mt-1 w-full input-light" placeholder="example@email.com" />
+          </label>
+
+        </div>
+      </section>
+
+      <!-- Instructions -->
+      <section>
+        <h2 class="text-lg font-medium text-gray-700">Instructions</h2>
+        <ul class="text-sm text-gray-600 mt-1 ml-5 list-disc">
+          <li>Upload a clear photo — required for found items.</li>
+          <li>Provide accurate location & time details.</li>
+          <li>You will receive a tracking ID after submission.</li>
+        </ul>
+      </section>
+
+      <!-- Report Details -->
+      <section>
+        <h2 class="text-lg font-medium text-gray-700">Report Details</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+          <label>
+            <span class="text-sm label-muted">Report Type <span class="required"></span></span>
+            <select id="reportType" name="reportType" required class="mt-1 w-full input-light">
+              <option value="">-- Select --</option>
+              <option value="lost">Lost Item</option>
+              <option value="found">Found Item</option>
+            </select>
+          </label>
+
+          <label>
+            <span class="text-sm label-muted">Item Category <span class="required"></span></span>
+            <select id="category" name="category" required class="mt-1 w-full input-light">
+              <option value="">-- Select --</option>
+              <option>ID Card</option>
+              <option>Gadgets</option>
+              <option>Books</option>
+              <option>Clothing</option>
+              <option>Others</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="block mt-3">
+          <span class="text-sm label-muted">Item Name <span class="required"></span></span>
+          <input id="itemName" name="itemName" required class="mt-1 w-full input-light" />
+        </label>
+
+        <label class="block mt-3">
+          <span class="text-sm label-muted">Description <span class="required"></span></span>
+          <textarea id="description" name="description" required rows="4" class="mt-1 w-full input-light"></textarea>
+          <p id="descCount" class="text-xs text-gray-500 mt-1">0 characters</p>
+        </label>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+          <label>
+            <span class="text-sm label-muted">Location <span class="required"></span></span>
+            <input id="location" name="location" class="mt-1 w-full input-light" required />
+          </label>
+
+          <label>
+            <span class="text-sm label-muted">Date & Time <span class="required"></span></span>
+            <input id="datetime" name="datetime" type="datetime-local" class="mt-1 w-full input-light" required />
+          </label>
+        </div>
+
+        <label class="block mt-3">
+          <span class="text-sm label-muted">Photo Upload</span>
+          <input id="photos" name="photos" type="file" accept="image/*" multiple class="mt-1 w-full" />
+          <p id="fileCount" class="text-xs text-gray-500 mt-1">No files selected</p>
+        </label>
+
+      </section>
+
+      <!-- Signature -->
+      <section>
+        <h2 class="text-lg font-medium text-gray-700">Signature & Verification</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+
+          <label>
+            <span class="text-sm label-muted">Digital Signature <span class="required"></span></span>
+            <input id="signature" name="signature" class="mt-1 w-full input-light" required />
+          </label>
+
+          <label class="flex gap-3 mt-6">
+            <input id="certify" name="certify" type="checkbox" class="mt-1" required />
+            <div>
+              <div class="text-sm font-medium">I certify the information is true</div>
+              <div class="text-xs text-gray-500">Security will verify identity</div>
+            </div>
+          </label>
+
+        </div>
+      </section>
+
+      <!-- Summary -->
+      <section>
+        <h2 class="text-lg font-medium text-gray-700">Totals / Summary</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
+
+          <div class="p-3 border rounded-md bg-gray-50">
+            <div class="text-xs text-gray-500">Tracking ID</div>
+            <div id="trackingId" class="mt-1 font-mono text-pink-600">—</div>
+          </div>
+
+          <div class="p-3 border rounded-md bg-gray-50">
+            <div class="text-xs text-gray-500">Files Uploaded</div>
+            <div id="totalFiles" class="mt-1">0</div>
+          </div>
+
+          <div class="p-3 border rounded-md bg-gray-50">
+            <div class="text-xs text-gray-500">Description Length</div>
+            <div id="descLen" class="mt-1">0</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Comments -->
+      <section>
+        <h2 class="text-lg font-medium text-gray-700">Comments</h2>
+        <textarea id="commentsBox" rows="3" class="mt-1 w-full input-light"></textarea>
+      </section>
+
+      <!-- Actions -->
+      <div class="flex justify-between mt-4">
+        <button type="button" id="resetBtn" class="px-4 py-2 rounded border bg-white">
+          Reset
+        </button>
+
+        <div class="flex gap-3">
+          <button type="button" id="previewBtn" class="px-4 py-2 rounded border bg-white">
+            Preview
+          </button>
+          <button type="submit" class="px-5 py-2 rounded text-white font-semibold" style="background:linear-gradient(90deg,#ff6aa6,#ff2d8b);">
+            Submit Report
+          </button>
+        </div>
+      </div>
+
+      <div id="response" class="hidden mt-4 p-3 rounded bg-gray-100"></div>
+
+    </form>
+  </div>
+
+<script>
+  const form = document.getElementById('lostFoundForm');
+  const desc = document.getElementById('description');
+  const descCount = document.getElementById('descCount');
+  const descLen = document.getElementById('descLen');
+  const photos = document.getElementById('photos');
+  const fileCount = document.getElementById('fileCount');
+  const totalFiles = document.getElementById('totalFiles');
+  const trackingIdEl = document.getElementById('trackingId');
+  const response = document.getElementById('response');
+  const reportType = document.getElementById('reportType');
+
+  desc.addEventListener('input', () => {
+    descCount.textContent = desc.value.length + " characters";
+    descLen.textContent = desc.value.length;
+  });
+
+  photos.addEventListener('change', () => {
+    const c = photos.files.length;
+    fileCount.textContent = c ? `${c} file(s) selected` : "No files selected";
+    totalFiles.textContent = c;
+  });
+
+  document.getElementById('previewBtn').addEventListener('click', () => {
+    const data = new FormData(form);
+    let summary = "<strong>Preview:</strong><br><ul>";
+    for (let [k, v] of data) {
+      if (k !== "photos") summary += `<li><strong>${k}:</strong> ${v}</li>`;
+    }
+    summary += "</ul>";
+    response.innerHTML = summary;
+    response.classList.remove("hidden");
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    form.reset();
+    trackingIdEl.textContent = "—";
+    descCount.textContent = "0 characters";
+    descLen.textContent = "0";
+    fileCount.textContent = "No files selected";
+    totalFiles.textContent = "0";
+    response.classList.add("hidden");
+  });
+
+  function generateTrackingId() {
+    return "LF" + Date.now().toString(36).toUpperCase().slice(-8);
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    if (reportType.value === "found" && photos.files.length === 0) {
+      alert("Photo required for found items");
+      return;
+    }
+
+    const tId = generateTrackingId();
+    trackingIdEl.textContent = tId;
+
+    response.innerHTML = `<div class="text-green-600 font-medium">Report submitted!</div>
+      <div class="text-gray-600">Tracking ID: <span class="font-mono text-pink-600">${tId}</span></div>`;
+    response.classList.remove("hidden");
+  });
+</script>
+
+</body>
+</html>
